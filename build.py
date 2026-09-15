@@ -31,6 +31,13 @@ def base(title, content, prefix='', active='materials', body_class=''):
     analytics = ''
     if CONFIG.get('analyticsUrl','').startswith('https://'):
         analytics = link(CONFIG['analyticsUrl'], 'Статистика посещений')
+    counter_key = 'siteforthecollege.github.io/metodichka'
+    counter_url = f'https://hits.sh/{counter_key}/'
+    counter_badge = f'https://hits.sh/{counter_key}.svg?' + urlencode({
+        'label': 'Просмотры сайта', 'color': '235cc7',
+        'labelColor': '142b4e', 'style': 'flat', 'view': 'total'
+    })
+    counter = f'<div class="visit-counter"><a href="{counter_url}" target="_blank" rel="noopener noreferrer" title="Общий счётчик просмотров всех страниц. Открыть статистику Hits.sh"><img src="{e(counter_badge, quote=True)}" alt="Просмотры сайта — общий счётчик" height="24" referrerpolicy="no-referrer" data-visit-counter></a><small>Общие просмотры страниц · <a href="{counter_url}" target="_blank" rel="noopener noreferrer">Статистика</a></small></div>'
     favicon = quote('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#142b4e"/><path d="M7 8h7l2 2 2-2h7v16h-7l-2 2-2-2H7Z" fill="none" stroke="#fff" stroke-width="2"/><path d="M16 10v16" stroke="#e0a453" stroke-width="2"/></svg>')
     return f'''<!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,7 +47,7 @@ def base(title, content, prefix='', active='materials', body_class=''):
 <body class="{body_class}"><a href="#main" class="skip-link">К содержанию</a>
 <header class="topbar"><a class="brand" href="{prefix}index.html"><span class="brand-icon" aria-hidden="true">М</span><span>Методический<br><strong>кабинет</strong></span></a><nav aria-label="Основная навигация">{nav}</nav><span class="year">2025–2026 <span>учебный год</span></span></header>
 {content}
-<footer class="footer"><div><strong>{e(TEACHER)}</strong><span>Учебно-методические материалы · 2025–2026</span></div><div>{link(prefix+'contact.html','Задать вопрос')}{analytics}</div></footer></body></html>'''
+<footer class="footer"><div><strong>{e(TEACHER)}</strong><span>Учебно-методические материалы · 2025–2026</span></div>{counter}<div>{link(prefix+'contact.html','Задать вопрос')}{analytics}</div></footer></body></html>'''
 
 def material_card(m, num):
     return f'''<article class="card"><div class="card-top"><span class="kind">{e(m['kind'])}</span><span class="card-number">{num:02}</span></div>

@@ -1,4 +1,13 @@
 'use strict';
+document.querySelectorAll('[data-visit-counter]').forEach(image => {
+  const showUnavailable = () => {
+    const message = document.createElement('span');
+    message.textContent = 'Счётчик временно недоступен';
+    image.replaceWith(message);
+  };
+  image.addEventListener('error', showUnavailable, {once: true});
+  if (image.complete && image.naturalWidth === 0) showUnavailable();
+});
 document.querySelectorAll('[data-print]').forEach(button => button.addEventListener('click', () => {
   const details = [...document.querySelectorAll('details')];
   const states = details.map(item => item.open);
